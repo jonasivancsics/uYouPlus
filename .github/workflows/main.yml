@@ -63,8 +63,10 @@ jobs:
           cache: yes
 
       - name: Install Dependencies
-        if: steps.brew_cache.outputs.cache-hit != 'true'
-        run: brew install ldid dpkg make
+        run: |
+          brew list ldid || brew install ldid
+          brew list dpkg || brew install dpkg
+          brew list make || brew install make
 
       - name: Set PATH environment variable
         run: echo "$(brew --prefix make)/libexec/gnubin" >> $GITHUB_PATH 
